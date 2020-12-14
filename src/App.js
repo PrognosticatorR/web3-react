@@ -38,7 +38,6 @@ const App = () => {
     <div>Loading Web3, accounts, and contract...</div>
   ) : (
     <div className="App">
-      {console.log(contract)}
       <Home web3={web3} contract={contract} accounts={accounts} />
     </div>
   );
