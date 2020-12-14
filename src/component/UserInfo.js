@@ -8,6 +8,7 @@ const UserInfo = ({ accounts, balance }) => {
       style={{
         display: "flex",
         flexDirection: "column",
+        alignItems: "center",
         paddingLeft: "20px",
         lineHeight: "2rem",
       }}

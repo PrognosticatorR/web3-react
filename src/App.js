@@ -26,6 +26,7 @@ const App = () => {
       setWeb3(web3);
       setAccounts(accounts);
       setContract(instance);
+      web3.eth.defaultAccount = accounts[0];
     } catch (error) {
       alert(
         `Failed to load web3, accounts, or contract. Check console for details.`
@@ -38,7 +39,7 @@ const App = () => {
   ) : (
     <div className="App">
       {console.log(contract)}
-      <Home web={web3} contract={contract} accounts={accounts} />
+      <Home web3={web3} contract={contract} accounts={accounts} />
     </div>
   );
 };

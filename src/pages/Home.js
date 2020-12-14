@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { Row, Col } from "antd";
 
 import Layout from "../component/Layout";
@@ -11,6 +11,7 @@ const Home = ({ web3, accounts, contract }) => {
   const [amount, setAmount] = useState(null);
   const [status, setStatus] = useState("");
   const [balance, setBalance] = useState(0);
+  const [address, setAddress] = useState("");
 
   useEffect(() => {
     contract.methods
@@ -21,23 +22,29 @@ const Home = ({ web3, accounts, contract }) => {
 
   const transfer = async (address, amount) => {
     setAmount(amount);
-    const result = await contract.methods
+    setAddress(address);
+    await contract.methods
       .transfer(address, amount)
-      .send({ from: accounts[0] })
+      .send({ from: accounts[0], ges: "20" })
       .on("transactionHash", (hash) => {
         setTxHash(hash);
-        setStatus("pending");
+        setStatus("PENDING");
       });
-    if (Object.keys(result.events).length > 0) {
+    let receipt = await web3.eth.getTransactionReceipt(txHash);
+    if (receipt.status === true || receipt.status === 1) {
       setBalance(balance - amount);
-      setStatus("success");
+      setStatus("SUCCESSFUL");
+      return;
+    } else if (receipt.status === false || receipt.status === 0) {
+      setStatus("FAILED");
+      return;
     }
-    setStatus("failed");
   };
+
   return (
     <Layout>
       <Row>
-        <Col span={16}>
+        <Col span={24}>
           <UserInfo balance={balance} accounts={accounts} />
           <FormComponent
             web3={web3}
@@ -48,8 +55,13 @@ const Home = ({ web3, accounts, contract }) => {
         </Col>
       </Row>
       <Row>
-        <Col span={20}>
-          <TableComponent txHash={txHash} amount={amount} status={status} />
+        <Col span={24}>
+          <TableComponent
+            txHash={txHash}
+            amount={amount}
+            status={status}
+            address={address}
+          />
         </Col>
       </Row>
     </Layout>

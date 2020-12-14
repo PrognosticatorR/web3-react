@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { Form, Input, Button, InputNumber } from "antd";
-import { UpCircleOutlined, TransactionOutlined } from "@ant-design/icons";
-const reciever = "0x7Ca11D1AfF40D043415dEb05E2cC50Fb5dc4a4B7";
+import React, { useState } from "react";
+import { Form, Input, Button } from "antd";
+import { TransactionOutlined } from "@ant-design/icons";
 
-const FormComponent = ({ contract, accounts, transfer }) => {
+const FormComponent = ({ transfer }) => {
   const [componentSize, setComponentSize] = useState("medium");
 
   const onFormLayoutChange = ({ size }) => {
@@ -20,13 +19,17 @@ const FormComponent = ({ contract, accounts, transfer }) => {
   };
 
   return (
-    <div style={{ marginTop: "50px" }}>
+    <div
+      style={{
+        marginTop: "40px",
+      }}
+    >
       <Form
         labelCol={{
-          span: 6,
+          span: 4,
         }}
         wrapperCol={{
-          span: 17,
+          span: 18,
         }}
         layout="verticel"
         initialValues={{
@@ -38,6 +41,7 @@ const FormComponent = ({ contract, accounts, transfer }) => {
         onFinishFailed={onFinishFailed}
       >
         <Form.Item
+          initialValue=""
           label="Eth Address"
           name="address"
           rules={[
@@ -54,6 +58,7 @@ const FormComponent = ({ contract, accounts, transfer }) => {
           />
         </Form.Item>
         <Form.Item
+          initialValue=""
           label="Amount"
           name="amount"
           rules={[
@@ -70,7 +75,7 @@ const FormComponent = ({ contract, accounts, transfer }) => {
             htmlType="submit"
             shape="round"
             icon={<TransactionOutlined />}
-            size={"middle"}
+            size="large"
             // disabled={deploymentinProgress ? true : false}
           >
             Transfer Tokens
