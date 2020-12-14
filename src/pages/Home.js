@@ -7,7 +7,7 @@ import UserInfo from "../component/UserInfo";
 import TableComponent from "../component/TableComponent";
 
 const Home = ({ web3, accounts, contract }) => {
-  const [txHash, setTxHash] = useState("");
+  const [txHash, setTxHash] = useState(null);
   const [amount, setAmount] = useState(null);
   const [status, setStatus] = useState("");
   const [balance, setBalance] = useState(0);
@@ -23,14 +23,17 @@ const Home = ({ web3, accounts, contract }) => {
   const transfer = async (address, amount) => {
     setAmount(amount);
     setAddress(address);
+    let currHash;
     await contract.methods
       .transfer(address, amount)
       .send({ from: accounts[0], ges: "20" })
       .on("transactionHash", (hash) => {
+        currHash = hash;
         setTxHash(hash);
         setStatus("PENDING");
       });
-    let receipt = await web3.eth.getTransactionReceipt(txHash);
+    let receipt = await web3.eth.getTransactionReceipt(currHash);
+    console.log(receipt);
     if (receipt.status === true || receipt.status === 1) {
       setBalance(balance - amount);
       setStatus("SUCCESSFUL");

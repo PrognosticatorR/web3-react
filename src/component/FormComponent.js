@@ -76,7 +76,6 @@ const FormComponent = ({ transfer }) => {
             shape="round"
             icon={<TransactionOutlined />}
             size="large"
-            // disabled={deploymentinProgress ? true : false}
           >
             Transfer Tokens
           </Button>
