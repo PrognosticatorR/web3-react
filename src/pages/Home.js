@@ -49,12 +49,7 @@ const Home = ({ web3, accounts, contract }) => {
       <Row>
         <Col span={24}>
           <UserInfo balance={balance} accounts={accounts} />
-          <FormComponent
-            web3={web3}
-            accounts={accounts}
-            contract={contract}
-            transfer={transfer}
-          />
+          <FormComponent transfer={transfer} status={status} />
         </Col>
       </Row>
       <Row>

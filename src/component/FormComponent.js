@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Form, Input, Button } from "antd";
 import { TransactionOutlined } from "@ant-design/icons";
 
-const FormComponent = ({ transfer }) => {
+const FormComponent = ({ transfer, status }) => {
   const [componentSize, setComponentSize] = useState("medium");
 
   const onFormLayoutChange = ({ size }) => {
@@ -74,10 +74,11 @@ const FormComponent = ({ transfer }) => {
           <Button
             htmlType="submit"
             shape="round"
-            icon={<TransactionOutlined />}
+            icon={<TransactionOutlined spin />}
             size="large"
+            disabled={status === "PENDING" ? true : false}
           >
-            Transfer Tokens
+            {status === "PENDING" ? "Transfering Funds" : "Transfer Tokens"}
           </Button>
         </Form.Item>
       </Form>
